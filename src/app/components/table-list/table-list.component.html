@@ -1,0 +1,29 @@
+<app-table [shopper]="shoppers" [state]="state"
+(onEditShopper)="onEditShopper.emit($event)"
+(onDeleteShopper)="onDeleteShopper.emit($event)"
+(onSelected)="selected.emit($event)"
+></app-table>
+<div *ngIf="shoppers.length === 0 && !loading">
+<div class="d-flex justify-content-center align-content-center">
+  <div class="d-flex flex-column">
+    <div class="empty-list">
+      <img src="/assets/images/empty.png" alt="">
+    </div>
+    <h4 class="empty-list__message">No Result Found</h4>
+
+  </div>
+</div>
+</div>
+<div *ngIf="loading">
+  <div *ngFor="let i of [1, 2, 3]" class="loading-item">
+    <div class="d-flex justify-content-left" style="gap: 7rem;">
+      <span class="glow-checkbox"></span>
+      <span class="glow-text"><span>Loading</span><span>cool</span><span>state</span><span>loading</span></span>
+      <span class="glow-text"><span>Loading</span><span>cool</span><span>state</span></span>
+      <div class="d-flex justify-content-left" style="gap: 0.5rem;">
+        <span class="glow-checkbox"></span>
+        <span class="glow-checkbox"></span>
+      </div>
+    </div>
+  </div>
+</div>

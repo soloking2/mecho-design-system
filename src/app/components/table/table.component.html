@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <table>
+        <thead>
+          <th>#</th>
+          <th>NAME</th>
+          <th>DATE</th>
+          <th *ngIf="!state">Amount</th>
+          <th *ngIf="state === 'actions'">{{state | uppercase}}</th>
+          <th *ngIf="state === 'tags' || state === 'selection'">{{(state === 'selection') ? 'TAGS' : state | uppercase}}</th>
+          <th *ngIf="state === 'attachment' || state === 'empty'">{{(state === 'empty') ? 'ATTACHMENT' : state | uppercase}}</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of shopper; let i = index">
+            <td *ngIf="state !=='selection'">{{(i + 1) < 10 ? '0' + (i + 1) : i + 1}}</td>
+            <td *ngIf="state === 'selection'">
+              <label class="checkbox">
+                <input type="checkbox" [defaultChecked]="i===0">
+                <span (click)="onSelection(user.id)"></span>
+              </label>
+            </td>
+            <td>{{user.name}}</td>
+            <td>{{user.date | date}}</td>
+            <td *ngIf="!state">{{user.amount | currency: '₦':'symbol'}}</td>
+            <td *ngIf="state === 'actions'">
+              <div class="d-flex justify-content-left">
+                <button class="btn btn-success" (click)="onEdit(user.id)">
+                  <div class="d-flex justify-content-center align-content-center">
+                    <img src="assets/images/edit.png" alt="">
+
+                  </div>
+                </button>
+                <button class="btn btn-danger" (click)="onDelete(user.id)">
+                  <div class="d-flex justify-content-center align-content-center">
+                    <img src="assets/images/delete.png" alt="">
+                  </div>
+                </button>
+
+              </div>
+            </td>
+            <td *ngIf="state === 'tags' || state === 'selection'">
+              <p class="status" [ngSwitch]="user.tag">
+                <span *ngSwitchCase="'completed'" class="completed">
+                  Completed
+                </span>
+                <span *ngSwitchCase="'ongoing'" class="ongoing">
+                  Ongoing
+                </span>
+                <span *ngSwitchCase="'cancelled'" class="cancelled">
+                  Cancelled
+                </span>
+                <span *ngSwitchDefault>
+                  N/A
+                </span>
+              </p>
+            </td>
+            <td *ngIf="state === 'attachment'">
+              <div class="d-flex justify-content-left" style="gap: 1rem;">
+                <div class="attachment">
+                  <img src="/assets/images/attachment.png" alt="">
+                </div>
+                  <a href="">{{user.attachment}}</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
